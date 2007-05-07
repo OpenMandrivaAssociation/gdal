@@ -14,13 +14,13 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
-Version: 1.4.0
+Version: 1.4.1
 Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
-License:	MIT
-URL: http://www.remotesensing.org/gdal/
-Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.bz2
+License: MIT
+URL: http://www.gdal.org/
+Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 %if %build_geotiff
@@ -61,22 +61,21 @@ Python, C, and C++ interfaces are available.
 
 %package python
 Summary: The Python bindings for the GDAL library
-Group: 		Sciences/Geosciences
-#Requires:
+Group: Sciences/Geosciences
 Requires: %{libname} = %{version}
 %description python
 The Python bindings for the GDAL library
 
 %package -n %{libname}
 Summary: Libraries required for the GDAL library
-Group: 		Sciences/Geosciences
+Group: Sciences/Geosciences
 Provides: lib%{name} = %{version}
 %description -n %{libname}
 Libraries required for the GDAL library
 
 %package -n %{libname}-devel
 Summary: Development files for using the GDAL library
-Group: 		Sciences/Geosciences
+Group: Sciences/Geosciences
 Requires: %{libname} = %{version}-%{release}
 Provides: lib%{name}-devel = %{version}
 Provides: %{name}-devel = %{version}
@@ -156,7 +155,6 @@ perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
 %multiarch %{multiarch_includedir}/cpl_config.h
 %endif
 %{_bindir}/gdal-config
-# doc html/*
 
 %files -n %{libname}
 %defattr(-,root,root)
