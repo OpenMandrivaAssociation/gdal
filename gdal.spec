@@ -48,7 +48,6 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	mysql-devel
 %py_requires -d 
 Requires:	%{libname} = %{version}
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
