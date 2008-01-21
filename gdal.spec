@@ -20,7 +20,7 @@ URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
-BuildRequires:	libgeotiff-devel >= 1.2.0
+BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	libpng-devel
 BuildRequires:	libungif-devel
 BuildRequires:	postgresql-devel
