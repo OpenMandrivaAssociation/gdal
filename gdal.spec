@@ -27,6 +27,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libproj-devel >= 4.4.7
+BuildRequires:  doxygen
 %if %{build_libgrass}
 BuildRequires:	libgrass5-devel
 %else
