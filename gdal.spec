@@ -13,12 +13,14 @@
 
 Name: gdal
 Version: 1.5.0
-Release: %mkrel 4
+Release: %mkrel 5
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
+Patch0:    %{name}-gcc43.patch
+Patch1:    %{name}-perl510.patch
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -95,6 +97,8 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
+%patch0 -p0 -b .gcc43
+%patch1 -p0 -b .perl510
 
 %build
 export CPPFLAGS="${CPPFLAGS} -I%{_includedir}/hdf $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I%{_includedir}/libgeotiff"
