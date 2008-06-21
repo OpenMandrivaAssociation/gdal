@@ -12,7 +12,7 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
-Version: 1.5.1
+Version: 1.5.2
 Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
@@ -97,7 +97,7 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-%patch0 -p0 -b .gcc43
+#patch0 -p0 -b .gcc43
 %patch1 -p0 -b .perl510
 
 %build
@@ -136,12 +136,14 @@ sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
         %endif
         --with-threads
         
+perl -pi -e 's/PY_HAVE_SETUPTOOLS=1/PY_HAVE_SETUPTOOLS=0/g' GDALmake.opt
 make
 make docs
 
 %install
 rm -Rf %buildroot
-
+mkdir -p %{buildroot}/%python_sitelib
+export PYTHONPATH="%{buildroot}/%python_sitelib"
 %makeinstall_std 
 %multiarch_binaries %{buildroot}%{_bindir}/gdal-config
 
