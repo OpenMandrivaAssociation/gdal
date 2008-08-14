@@ -41,7 +41,7 @@ BuildRequires:	hdf5-devel
 BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
 BuildRequires:	cfitsio-devel
-BuildRequires:	python-numpy-devel
+#BuildRequires:	python-numpy-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	mysql-devel
 BuildRequires:	libdap-devel
@@ -70,14 +70,14 @@ The Python bindings for the GDAL library
 
 %package -n %{libname}
 Summary: Libraries required for the GDAL library
-Group: Sciences/Geosciences
+Group: System/Libraries
 Provides: lib%{name} = %{version}
 %description -n %{libname}
 Libraries required for the GDAL library
 
 %package -n %{libnamedev}
 Summary: Development files for using the GDAL library
-Group: Sciences/Geosciences
+Group: Development/C
 Requires: %{libname} = %{version}-%{release}
 Provides: lib%{name}-devel = %{version}
 Provides: %{name}-devel = %{version}
@@ -87,7 +87,7 @@ Development files for using the GDAL library
 
 %package -n %{libnamedevstat}
 Summary: Development files for using the GDAL library
-Group: Sciences/Geosciences
+Group: Development/C
 Requires: %{libnamedev} = %{version}-%{release}
 
 %description -n %{libnamedevstat}
@@ -97,7 +97,6 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-#patch0 -p0 -b .gcc43
 %patch1 -p0 -b .perl510
 
 %build
@@ -141,13 +140,33 @@ make
 make docs
 
 %install
+<<<<<<< .mine
+rm -Rf %{buildroot}
+
+# fix include header instalation issue
+cat GNUmakefile | grep -v "\$(INSTALL_DIR) \$(DESTDIR)\$(INST_INCLUDE)" | \
+                  grep -v "\$(INSTALL_DIR) \$(DESTDIR)\$(INST_DATA)" \
+		 > GNUmakefile.tmp; mv -f GNUmakefile.tmp GNUmakefile
+
+%makeinstall DESTDIR=%{buildroot}                
+%make DESTDIR=%{buildroot} \
+      INST_MAN=%{_mandir} \
+      install-man 
+
+perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
+
+=======
 rm -Rf %buildroot
 mkdir -p %{buildroot}/%python_sitelib
 export PYTHONPATH="%{buildroot}/%python_sitelib"
 %makeinstall_std 
+>>>>>>> .r271972
 %multiarch_binaries %{buildroot}%{_bindir}/gdal-config
 
+<<<<<<< .mine
+=======
 
+>>>>>>> .r271972
 %clean
 rm -rf %buildroot
 
@@ -178,11 +197,12 @@ rm -rf %buildroot
 %files -n %{libnamedevstat}
 %defattr(-,root,root)
 %{_libdir}/*.a
+%{_libdir}/*.la
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.*
-%{_libdir}/*.la
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
 
 %files python
 %defattr(-,root,root,-)
