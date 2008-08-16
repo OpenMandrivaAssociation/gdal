@@ -41,7 +41,7 @@ BuildRequires:	hdf5-devel
 BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
 BuildRequires:	cfitsio-devel
-#BuildRequires:	python-numpy-devel
+BuildRequires:	python-numpy-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	mysql-devel
 BuildRequires:	libdap-devel
@@ -140,33 +140,16 @@ make
 make docs
 
 %install
-<<<<<<< .mine
-rm -Rf %{buildroot}
-
-# fix include header instalation issue
-cat GNUmakefile | grep -v "\$(INSTALL_DIR) \$(DESTDIR)\$(INST_INCLUDE)" | \
-                  grep -v "\$(INSTALL_DIR) \$(DESTDIR)\$(INST_DATA)" \
-		 > GNUmakefile.tmp; mv -f GNUmakefile.tmp GNUmakefile
-
-%makeinstall DESTDIR=%{buildroot}                
-%make DESTDIR=%{buildroot} \
-      INST_MAN=%{_mandir} \
-      install-man 
-
-perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
-
-=======
 rm -Rf %buildroot
 mkdir -p %{buildroot}/%python_sitelib
 export PYTHONPATH="%{buildroot}/%python_sitelib"
-%makeinstall_std 
->>>>>>> .r271972
+export INST_MAN=%{_mandir}
+%makeinstall_std install-man
+perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
+
 %multiarch_binaries %{buildroot}%{_bindir}/gdal-config
 
-<<<<<<< .mine
-=======
 
->>>>>>> .r271972
 %clean
 rm -rf %buildroot
 
