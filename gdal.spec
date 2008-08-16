@@ -167,11 +167,14 @@ rm -rf %buildroot
 %{_bindir}/gdal*
 %{_bindir}/nearblack
 %exclude %{_bindir}/gdal-config
+%{_mandir}/man1/*.1.*
+%exclude %{_mandir}/man1/gdal-config.1.*
 %doc NEWS VERSION
 
 %files -n %{libnamedev}
 %defattr(-,root,root)
 %{_bindir}/%{name}-config
+%{_mandir}/man1/gdal-config.1.*
 %{_libdir}/*.so
 %{_includedir}/*
 %_docdir/*
