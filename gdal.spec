@@ -19,8 +19,8 @@ Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
-Patch0:    %{name}-gcc43.patch
-Patch1:    %{name}-perl510.patch
+Patch0: %{name}-perl510.patch
+Patch1: gdal-1.5.2-libldap.patch
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -37,7 +37,6 @@ BuildConflicts:	%mklibname -d grass 5 0
 %endif
 BuildRequires:	libjasper-devel
 BuildRequires:	libgeos-devel >= 2.2.3
-BuildRequires:	hdf5-devel
 BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
 BuildRequires:	cfitsio-devel
@@ -97,10 +96,11 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-%patch1 -p0 -b .perl510
+%patch0 -p0 -b .perl510
+%patch1 -p0 -b .libldap
 
 %build
-export CPPFLAGS="${CPPFLAGS} -I%{_includedir}/hdf $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I%{_includedir}/libgeotiff"
+export CPPFLAGS="${CPPFLAGS} $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I%{_includedir}/libgeotiff"
 
 sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
 
@@ -114,7 +114,7 @@ sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
         --with-libtiff=yes   \
         --with-libz=%_prefix      \
         --with-netcdf             \
-        --with-hdf5               \
+        --without-hdf5               \
         --with-geos               \
         --with-jasper             \
         --with-png                \
