@@ -99,10 +99,10 @@ Development files for using the GDAL library
 %patch0 -p0 -b .perl510
 %patch1 -p0 -b .libldap
 
+sed -i "s|@LIBTOOL@|%{_bindir}/libtool|g" GDALmake.opt.in
+
 %build
 export CPPFLAGS="${CPPFLAGS} $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I%{_includedir}/libgeotiff"
-
-sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
 
 %configure2_5x \
 	--datadir=%_datadir/gdal \
