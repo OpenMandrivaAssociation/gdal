@@ -12,15 +12,15 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
-Version: 1.5.2
-Release: %mkrel 5
+Version: 1.6.0
+Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch0: %{name}-perl510.patch
-Patch1: gdal-1.5.2-libldap.patch
+Patch2: gdal-1.6.0-fix-str-fmt.patch
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -92,12 +92,10 @@ Requires: %{libnamedev} = %{version}-%{release}
 %description -n %{libnamedevstat}
 Development files for using the GDAL library
 
-
-
 %prep
 %setup -q
-%patch0 -p0 -b .perl510
-%patch1 -p0 -b .libldap
+#patch0 -p0 -b .perl510
+%patch2 -p0 -b .str
 
 sed -i "s|@LIBTOOL@|%{_bindir}/libtool|g" GDALmake.opt.in
 
