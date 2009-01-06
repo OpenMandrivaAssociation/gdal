@@ -20,7 +20,6 @@ License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch2: gdal-1.6.0-fix-str-fmt.patch
-BuildRequires:	gcc4.2 gcc4.2-c++
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
