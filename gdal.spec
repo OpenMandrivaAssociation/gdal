@@ -19,8 +19,8 @@ Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
-Patch0: %{name}-perl510.patch
 Patch2: gdal-1.6.0-fix-str-fmt.patch
+BuildRequires:	gcc4.2 gcc4.2-c++
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -94,10 +94,7 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-#patch0 -p0 -b .perl510
 %patch2 -p0 -b .str
-
-sed -i "s|@LIBTOOL@|%{_bindir}/libtool|g" GDALmake.opt.in
 
 %build
 export CPPFLAGS="${CPPFLAGS} $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I%{_includedir}/libgeotiff"
@@ -164,6 +161,7 @@ rm -rf %buildroot
 %{_bindir}/ogr*
 %{_bindir}/gdal*
 %{_bindir}/nearblack
+%{_bindir}/testepsg
 %exclude %{_bindir}/gdal-config
 %{_mandir}/man1/*.1.*
 %exclude %{_mandir}/man1/gdal-config.1.*
