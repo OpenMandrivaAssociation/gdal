@@ -1,4 +1,4 @@
-%define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)
+%define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 
 %define major 1
 %define libname %mklibname %{name} %{major}
@@ -8,7 +8,7 @@
 # Build gdal against libgrass. It is better to instead compile the new plugin
 # which builds against grass itself (and thus has more features than the
 # libgrass5 version
-%define build_libgrass 0
+%define build_libgrass 1
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
@@ -20,6 +20,7 @@ License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch2: gdal-1.6.0-fix-str-fmt.patch
+Requires:	grass >= 6.4.0
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -30,7 +31,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	proj-devel >= 4.4.7
 BuildRequires:  doxygen
 %if %{build_libgrass}
-BuildRequires:	libgrass5-devel
+BuildRequires:	grass
 %else
 BuildConflicts:	%mklibname -d grass 5 0
 %endif
@@ -41,7 +42,7 @@ BuildRequires:	ogdi-devel
 BuildRequires:	cfitsio-devel
 BuildRequires:	python-numpy-devel
 BuildRequires:	sqlite3-devel
-BuildRequires:	mysql-devel
+#BuildRequires:	mysql-devel
 BuildRequires:	libdap-devel
 BuildRequires:	librx-devel
 BuildRequires:	unixODBC-devel
@@ -124,8 +125,7 @@ export CPPFLAGS="${CPPFLAGS} $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I
         --with-xerces-inc=%_includedir \
         --without-pcraster        \
         %if %{build_libgrass}
-    	    --with-libgrass             \
-    	    --with-grass=%_prefix     \
+    	    --with-grass=%_libdir/grass64     \
         %endif
         --with-threads
         
@@ -157,10 +157,7 @@ rm -rf %buildroot
 %files
 %defattr(-,root,root)
 %{_datadir}/gdal/
-%{_bindir}/ogr*
-%{_bindir}/gdal*
-%{_bindir}/nearblack
-%{_bindir}/testepsg
+%{_bindir}/*
 %exclude %{_bindir}/gdal-config
 %{_mandir}/man1/*.1.*
 %exclude %{_mandir}/man1/gdal-config.1.*
@@ -187,5 +184,4 @@ rm -rf %buildroot
 
 %files python
 %defattr(-,root,root,-)
-%attr(0755,root,root) %{_bindir}/*.py
 %py_platsitedir/*
