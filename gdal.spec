@@ -13,7 +13,7 @@
 
 Name: gdal
 Version: 1.6.0
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -48,7 +48,6 @@ BuildRequires:	librx-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
 BuildRequires:	swig
-%py_requires -d 
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -64,6 +63,8 @@ Python, C, and C++ interfaces are available.
 Summary: The Python bindings for the GDAL library
 Group: Sciences/Geosciences
 Requires: %{libname} = %{version}
+%py_requires -d
+
 %description python
 The Python bindings for the GDAL library
 
@@ -71,6 +72,7 @@ The Python bindings for the GDAL library
 Summary: Libraries required for the GDAL library
 Group: System/Libraries
 Provides: lib%{name} = %{version}
+
 %description -n %{libname}
 Libraries required for the GDAL library
 
