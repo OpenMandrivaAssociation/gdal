@@ -8,12 +8,12 @@
 # Build gdal against libgrass. It is better to instead compile the new plugin
 # which builds against grass itself (and thus has more features than the
 # libgrass5 version
-%define build_libgrass 1
+%define build_libgrass 0
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
 Version: 1.6.0
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
