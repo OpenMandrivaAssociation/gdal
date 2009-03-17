@@ -7,7 +7,9 @@
 
 # Build gdal against libgrass. It is better to instead compile the new plugin
 # which builds against grass itself (and thus has more features than the
-# libgrass5 version
+# libgrass5 version)
+# In fact, building with direct grass support will break gdal on every grass
+# upgrade, see http://n2.nabble.com/qgis-%2B-grass-plugin-%3D-gdal-problem-tp2394932p2405146.html
 %define build_libgrass 0
 %{?with_libgrass: %define build_libgrass 1}
 
