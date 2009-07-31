@@ -23,7 +23,6 @@ URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch2: gdal-1.6.1-fix-str-fmt.patch
 Patch3: gdal-1.6.0-fix-libname.patch
-Requires:	grass >= 6.4.0
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -34,6 +33,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	proj-devel >= 4.4.7
 BuildRequires:  doxygen
 %if %{build_libgrass}
+Requires:	grass >= 6.4.0
 BuildRequires:	grass
 %else
 BuildConflicts:	%mklibname -d grass 5 0
