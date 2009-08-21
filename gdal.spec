@@ -14,8 +14,8 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
-Version: 1.6.1
-Release: %mkrel 2
+Version: 1.6.2
+Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -46,7 +46,7 @@ BuildRequires:	cfitsio-devel
 BuildRequires:	python-numpy-devel
 BuildRequires:	sqlite3-devel
 #BuildRequires:	mysql-devel
-BuildRequires:	libdap-devel
+#BuildRequires:	libdap-devel
 BuildRequires:	librx-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
@@ -103,12 +103,10 @@ Development files for using the GDAL library
 %patch3 -p0 -b .libname
 
 %build
-export CPPFLAGS="${CPPFLAGS} $(dap-config --cflags) -I%{_includedir}/netcdf-3 -I%{_includedir}/libgeotiff"
-
 %configure2_5x \
 	--datadir=%_datadir/gdal \
 	--includedir=%_includedir/gdal \
-        --with-dods-root=%_prefix \
+        --with-dods-root=no \
         --with-ogdi=%_prefix \
         --with-cfitsio=%_prefix \
         --with-geotiff=yes   \
