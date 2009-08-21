@@ -15,7 +15,7 @@
 
 Name: gdal
 Version: 1.6.2
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -50,6 +50,7 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	librx-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
+BuildRequires:	hdf5-devel
 BuildRequires:	swig
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 
@@ -113,7 +114,7 @@ Development files for using the GDAL library
         --with-libtiff=yes   \
         --with-libz=%_prefix      \
         --with-netcdf             \
-        --without-hdf5               \
+        --with-hdf5=%_prefix      \
         --with-geos               \
         --with-jasper             \
         --with-png                \
