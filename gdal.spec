@@ -14,8 +14,8 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
-Version: 1.6.2
-Release: %mkrel 2
+Version: 1.6.3
+Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
