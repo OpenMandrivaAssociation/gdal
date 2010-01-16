@@ -15,7 +15,7 @@
 
 Name: gdal
 Version: 1.6.3
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -113,7 +113,7 @@ Development files for using the GDAL library
         --with-geotiff=yes   \
         --with-libtiff=yes   \
         --with-libz=%_prefix      \
-        --with-netcdf             \
+        --with-netcdf=%_prefix    \
         --with-hdf5=%_prefix      \
         --with-geos               \
         --with-jasper             \
@@ -184,8 +184,7 @@ rm -rf %buildroot
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{major}.*
+%{_libdir}/*.so.%{major}*
 
 %files python
 %defattr(-,root,root,-)
