@@ -104,6 +104,10 @@ Development files for using the GDAL library
 %patch3 -p0 -b .libname
 
 %build
+
+#fix netcdf hdf5 linking
+sed -i 's/-lnetcdf/-lnetcdf -lhdf5_hl -lhdf5 -lz/g' ./configure
+
 %configure2_5x \
 	--datadir=%_datadir/gdal \
 	--includedir=%_includedir/gdal \
