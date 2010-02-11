@@ -14,14 +14,14 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 Name: gdal
-Version: 1.6.3
-Release: %mkrel 3
+Version: 1.7.1
+Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
-Patch2: gdal-1.6.1-fix-str-fmt.patch
+Patch2: gdal-1.7.1-fix-str-fmt.patch
 Patch3: gdal-1.6.0-fix-libname.patch
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
@@ -106,7 +106,7 @@ Development files for using the GDAL library
 %build
 
 #fix netcdf hdf5 linking
-sed -i 's/-lnetcdf/-lnetcdf -lhdf5_hl -lhdf5 -lz/g' ./configure
+#sed -i 's/-lnetcdf/-lnetcdf -lhdf5_hl -lhdf5 -lz/g' ./configure
 
 %configure2_5x \
 	--datadir=%_datadir/gdal \
