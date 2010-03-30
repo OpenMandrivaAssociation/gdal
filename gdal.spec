@@ -44,6 +44,7 @@ BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
 BuildRequires:	cfitsio-devel
 BuildRequires:	python-numpy-devel
+BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
 #BuildRequires:	mysql-devel
 #BuildRequires:	libdap-devel
@@ -138,14 +139,15 @@ Development files for using the GDAL library
         %endif
         --with-threads
         
-perl -pi -e 's/PY_HAVE_SETUPTOOLS=1/PY_HAVE_SETUPTOOLS=0/g' GDALmake.opt
+perl -pi -e 's,PYTHON = no,PYTHON = /usr/bin/python,g' GDALmake.opt
 make
 make docs
 
 %install
 rm -Rf %buildroot
-mkdir -p %{buildroot}/%python_sitelib
-export PYTHONPATH="%{buildroot}/%python_sitelib"
+mkdir -p %{buildroot}/%py_platsitedir
+export PYTHONPATH="%{buildroot}/%py_platsitedir"
+#export DESTDIR=%{buildroot}
 export INST_MAN=%{_mandir}
 %makeinstall_std install-man
 perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
@@ -168,14 +170,11 @@ rm -rf %buildroot
 %{_datadir}/gdal/
 %{_bindir}/*
 %exclude %{_bindir}/gdal-config
-%{_mandir}/man1/*.1.*
-%exclude %{_mandir}/man1/gdal-config.1.*
 %doc NEWS VERSION
 
 %files -n %{libnamedev}
 %defattr(-,root,root)
 %{_bindir}/%{name}-config
-%{_mandir}/man1/gdal-config.1.*
 %{_libdir}/*.so
 %{_includedir}/*
 %_docdir/*
