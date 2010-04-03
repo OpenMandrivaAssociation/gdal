@@ -23,6 +23,7 @@ URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch2: gdal-1.7.1-fix-str-fmt.patch
 Patch3: gdal-1.6.0-fix-libname.patch
+Patch4: gdal-fix-pythontools-install.patch
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
@@ -103,6 +104,7 @@ Development files for using the GDAL library
 %setup -q
 %patch2 -p0 -b .str
 %patch3 -p0 -b .libname
+%patch4 -p1 -b .pythontools
 
 %build
 
