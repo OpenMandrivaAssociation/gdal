@@ -13,6 +13,11 @@
 %define build_libgrass 0
 %{?with_libgrass: %define build_libgrass 1}
 
+%define ogdidir %{_includedir}
+%if %mdkversion > 201000
+%define ogdidir %{_includedir}/ogdi
+%endif
+
 Name: gdal
 Version: 1.7.1
 Release: %mkrel 1
@@ -115,7 +120,7 @@ Development files for using the GDAL library
 	--datadir=%_datadir/gdal \
 	--includedir=%_includedir/gdal \
         --with-dods-root=no \
-        --with-ogdi=yes \
+        --with-ogdi=%{ogdidir} \
         --with-cfitsio=%_prefix \
         --with-geotiff=yes   \
         --with-libtiff=yes   \
