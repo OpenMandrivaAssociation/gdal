@@ -154,7 +154,8 @@ make docs
 rm -Rf %buildroot
 mkdir -p %{buildroot}/%py_platsitedir
 export PYTHONPATH="%{buildroot}/%py_platsitedir"
-#export DESTDIR=%{buildroot}
+export DESTDIR=%{buildroot}
+unset PYTHONDONTWRITEBYTECODE
 export INST_MAN=%{_mandir}
 %makeinstall_std install-man
 perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
