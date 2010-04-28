@@ -19,14 +19,14 @@
 %endif
 
 Name: gdal
-Version: 1.7.1
+Version: 1.7.2
 Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
-Patch2: gdal-1.7.1-fix-str-fmt.patch
+#Patch2: gdal-1.7.1-fix-str-fmt.patch
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 BuildRequires:	libpng-devel
@@ -107,14 +107,12 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-%patch2 -p0 -b .str
+#%patch2 -p0 -b .str
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
 
 %build
 
-#fix netcdf hdf5 linking
-#sed -i 's/-lnetcdf/-lnetcdf -lhdf5_hl -lhdf5 -lz/g' ./configure
 
 %configure2_5x \
 	--datadir=%_datadir/gdal \
