@@ -119,7 +119,7 @@ Development files for using the GDAL library
 	--includedir=%_includedir/gdal \
         --with-dods-root=no \
         --with-ogdi=%{ogdidir} \
-        --with-cfitsio=%_prefix \
+        --with-cfitsio=yes \
         --with-geotiff=yes   \
         --with-libtiff=yes   \
         --with-libz=%_prefix      \
