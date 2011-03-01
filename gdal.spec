@@ -20,7 +20,7 @@
 
 Name: gdal
 Version: 1.7.3
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -120,8 +120,8 @@ Development files for using the GDAL library
         --with-dods-root=no \
         --with-ogdi=%{ogdidir} \
         --with-cfitsio=yes \
-        --with-geotiff=yes   \
-        --with-libtiff=yes   \
+        --with-geotiff=internal   \
+        --with-libtiff=internal   \
         --with-libz=%_prefix      \
         --with-netcdf=%_prefix    \
         --with-hdf5=%_prefix      \
