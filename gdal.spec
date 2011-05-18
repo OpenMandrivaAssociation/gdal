@@ -26,7 +26,6 @@ Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
-#Patch2: gdal-1.7.1-fix-str-fmt.patch
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 BuildRequires:	libpng-devel
@@ -36,6 +35,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libungif-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	liblzma-devel
 BuildRequires:	proj-devel >= 4.4.7
 BuildRequires:  doxygen
 %if %{build_libgrass}
@@ -107,7 +107,6 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-#%patch2 -p0 -b .str
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
 
@@ -123,6 +122,7 @@ Development files for using the GDAL library
         --with-geotiff=internal   \
         --with-libtiff=internal   \
         --with-libz=%_prefix      \
+	--with-liblzma=yes        \
         --with-netcdf=%_prefix    \
         --with-hdf5=%_prefix      \
         --with-geos               \
@@ -131,7 +131,7 @@ Development files for using the GDAL library
         --with-gif                \
         --with-jpeg               \
         --with-odbc               \
-        --with-sqlite             \
+        --with-sqlite3            \
         --with-mysql              \
         --with-curl               \
         --with-python             \
@@ -184,7 +184,7 @@ rm -rf %buildroot
 %{_libdir}/*.so
 %{_includedir}/*
 %_docdir/*
-%multiarch %{multiarch_bindir}/gdal-config
+%{multiarch_bindir}/gdal-config
 
 %files -n %{libnamedevstat}
 %defattr(-,root,root)
