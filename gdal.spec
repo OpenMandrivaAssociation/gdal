@@ -19,20 +19,20 @@
 %endif
 
 Name: gdal
-Version: 1.8.0
+Version: 1.9.0
 Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
-Source: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
+Source0: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	libpng-devel
-BuildRequires:	libungif-devel
+BuildRequires:	giflib-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	liblzma-devel
@@ -59,7 +59,6 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
 BuildRequires:	hdf5-devel
 BuildRequires:	swig
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-root
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -70,13 +69,14 @@ efficient access, suitable for use in viewer applications,
 and also attempts to preserve coordinate systems and metadata.
 Python, C, and C++ interfaces are available.
 
-%package python
+%package -n python-%{name}
 Summary: The Python bindings for the GDAL library
 Group: Sciences/Geosciences
 Requires: %{libname} = %{version}
 %py_requires -d
+%rename gdal-python
 
-%description python
+%description -n python-%{name}
 The Python bindings for the GDAL library
 
 %package -n %{libname}
@@ -109,6 +109,8 @@ Development files for using the GDAL library
 %setup -q
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
+
+find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 
 %build
 
@@ -160,9 +162,11 @@ perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
 
 %multiarch_binaries %{buildroot}%{_bindir}/gdal-config
 
+find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 
-%clean
-rm -rf %buildroot
+install -d %{buildroot}%{_docdir}/%{name}
+mv %{buildroot}%{_bindir}/*.dox %{buildroot}%{_docdir}/%{name}
+chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -176,6 +180,7 @@ rm -rf %buildroot
 %{_datadir}/gdal/
 %{_bindir}/*
 %exclude %{_bindir}/gdal-config
+%exclude %{multiarch_bindir}/gdal-config
 %doc NEWS VERSION
 
 %files -n %{libnamedev}
@@ -183,7 +188,6 @@ rm -rf %buildroot
 %{_bindir}/%{name}-config
 %{_libdir}/*.so
 %{_includedir}/*
-%_docdir/*
 %{multiarch_bindir}/gdal-config
 
 %files -n %{libnamedevstat}
@@ -195,6 +199,6 @@ rm -rf %buildroot
 %defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 
-%files python
+%files -n python-%{name}
 %defattr(-,root,root,-)
 %py_platsitedir/*
