@@ -19,7 +19,7 @@
 %endif
 
 Name: gdal
-Version: 1.9.0
+Version: 1.9.1
 Release: %mkrel 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
@@ -168,15 +168,7 @@ install -d %{buildroot}%{_docdir}/%{name}
 mv %{buildroot}%{_bindir}/*.dox %{buildroot}%{_docdir}/%{name}
 chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %files
-%defattr(-,root,root)
 %{_datadir}/gdal/
 %{_bindir}/*
 %exclude %{_bindir}/gdal-config
@@ -184,21 +176,16 @@ chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 %doc NEWS VERSION
 
 %files -n %{libnamedev}
-%defattr(-,root,root)
 %{_bindir}/%{name}-config
 %{_libdir}/*.so
 %{_includedir}/*
 %{multiarch_bindir}/gdal-config
 
 %files -n %{libnamedevstat}
-%defattr(-,root,root)
 %{_libdir}/*.a
-%{_libdir}/*.la
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 
 %files -n python-%{name}
-%defattr(-,root,root,-)
 %py_platsitedir/*
