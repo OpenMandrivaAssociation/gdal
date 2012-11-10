@@ -1,0 +1,11 @@
+--- ogr/ogrct.cpp~	2008-09-16 10:32:39.000000000 +0200
++++ ogr/ogrct.cpp	2009-05-22 10:53:48.000000000 +0200
+@@ -80,7 +80,7 @@
+ #elif defined(__APPLE__)
+ #  define LIBNAME      "libproj.dylib"
+ #else
+-#  define LIBNAME      "libproj.so"
++#  define LIBNAME      "libproj.so.0"
+ #endif
+ 
+ /************************************************************************/
