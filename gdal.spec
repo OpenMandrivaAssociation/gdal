@@ -1,4 +1,8 @@
+%if %{_use_internal_dependency_generator}
+%define __noautoreq 'devel\\(libogdi31.*\\)|devel\\(libcfitsio.*\\)|libgrass'
+%else
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
+%endif
 
 %define major 1
 %define libname %mklibname %{name} %{major}
@@ -14,13 +18,11 @@
 %{?with_libgrass: %define build_libgrass 1}
 
 %define ogdidir %{_includedir}
-%if %mdkversion > 201000
 %define ogdidir %{_includedir}/ogdi
-%endif
 
 Name: gdal
 Version: 1.9.1
-Release: %mkrel 1
+Release: 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -33,10 +35,10 @@ BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	libpng-devel
 BuildRequires:	giflib-devel
-BuildRequires:	postgresql-devel
+BuildRequires:  postgresql-devel >=9.0
 BuildRequires:	libjpeg-devel
 BuildRequires:	liblzma-devel
-BuildRequires:	proj-devel >= 4.4.7
+BuildRequires:	pkgconfig(proj) >= 4.4.7
 BuildRequires:  doxygen
 %if %{build_libgrass}
 Requires:	grass >= 6.4.0
@@ -54,7 +56,7 @@ BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
 #BuildRequires:	mysql-devel
 #BuildRequires:	libdap-devel
-BuildRequires:	librx-devel
+#BuildRequires:	librx-devel
 BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
 BuildRequires:	hdf5-devel
@@ -111,6 +113,8 @@ Development files for using the GDAL library
 %patch4 -p1 -b .pythontools
 
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
+find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
+
 
 %build
 
@@ -151,7 +155,6 @@ make
 make docs
 
 %install
-rm -Rf %buildroot
 mkdir -p %{buildroot}/%py_platsitedir
 export PYTHONPATH="%{buildroot}/%py_platsitedir"
 export DESTDIR=%{buildroot}
@@ -171,6 +174,7 @@ chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 %files
 %{_datadir}/gdal/
 %{_bindir}/*
+%{_mandir}/man1/*.xz
 %exclude %{_bindir}/gdal-config
 %exclude %{multiarch_bindir}/gdal-config
 %doc NEWS VERSION
