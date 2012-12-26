@@ -21,8 +21,8 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 1.9.1
-Release: 2
+Version: 1.9.2
+Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
