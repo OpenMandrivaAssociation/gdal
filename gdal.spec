@@ -40,6 +40,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	liblzma-devel
 BuildRequires:	pkgconfig(proj) >= 4.4.7
 BuildRequires:  doxygen
+BuildRequires:  pkgconfig(libtirpc)
 %if %{build_libgrass}
 Requires:	grass >= 6.4.0
 BuildRequires:	grass
