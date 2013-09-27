@@ -1,5 +1,5 @@
 %if %{_use_internal_dependency_generator}
-%define __noautoreq 'devel\\(libogdi31.*\\)|devel\\(libcfitsio.*\\)|libgrass'
+%define __noautoreq 'devel\\(libogdi31.*|devel\\(libcfitsio.*|libgrass.*'
 %else
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
@@ -22,7 +22,7 @@
 
 Name: gdal
 Version: 1.9.2
-Release: 1
+Release: 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
