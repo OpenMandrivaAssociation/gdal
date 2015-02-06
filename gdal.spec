@@ -22,7 +22,7 @@
 
 Name: gdal
 Version: 1.9.2
-Release: 2
+Release: 3
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
