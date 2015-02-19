@@ -30,14 +30,13 @@ URL: http://www.gdal.org/
 Source0: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
-BuildRequires:	libpng-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
-BuildRequires:	libpng-devel
+BuildRequires:	png-devel
 BuildRequires:	giflib-devel
 BuildRequires:  postgresql-devel >=9.0
-BuildRequires:	libjpeg-devel
-BuildRequires:	liblzma-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	lzma-devel
 BuildRequires:	pkgconfig(proj) >= 4.4.7
 BuildRequires:  doxygen
 BuildRequires:  pkgconfig(libtirpc)
@@ -47,8 +46,8 @@ BuildRequires:	grass
 %else
 BuildConflicts:	%mklibname -d grass 5 0
 %endif
-BuildRequires:	libjasper-devel
-BuildRequires:	libgeos-devel >= 2.2.3
+BuildRequires:	jasper-devel
+BuildRequires:	geos-devel >= 2.2.3
 BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
 BuildRequires:	cfitsio-devel
