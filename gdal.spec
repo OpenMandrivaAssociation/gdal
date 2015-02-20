@@ -135,6 +135,7 @@ sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
         --with-hdf5=%_prefix      \
         --with-geos               \
         --with-jasper             \
+	--without-libtool	  \
         --with-png                \
         --with-gif                \
         --with-jpeg               \
