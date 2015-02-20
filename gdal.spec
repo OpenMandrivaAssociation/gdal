@@ -115,11 +115,13 @@ Development files for using the GDAL library
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 
+# Replace hard-coded library- and include paths
+sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
 
 %build
 
 
-%configure2_5x \
+%configure \
 	--datadir=%_datadir/gdal \
 	--includedir=%_includedir/gdal \
         --with-dods-root=no \
