@@ -7,7 +7,6 @@
 %define major 1
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
-%define libnamedevstat %mklibname %{name} -d -s
 
 # Build gdal against libgrass. It is better to instead compile the new plugin
 # which builds against grass itself (and thus has more features than the
@@ -99,14 +98,6 @@ Provides: %{name}-devel = %{version}
 %description -n %{libnamedev}
 Development files for using the GDAL library
 
-%package -n %{libnamedevstat}
-Summary: Development files for using the GDAL library
-Group: Development/C
-Requires: %{libnamedev} = %{version}-%{release}
-
-%description -n %{libnamedevstat}
-Development files for using the GDAL library
-
 %prep
 %setup -q
 %patch3 -p0 -b .libname
@@ -187,9 +178,6 @@ chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 %{_libdir}/*.so
 %{_includedir}/*
 %{multiarch_bindir}/gdal-config
-
-%files -n %{libnamedevstat}
-%{_libdir}/*.a
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
