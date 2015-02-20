@@ -74,7 +74,6 @@ Python, C, and C++ interfaces are available.
 Summary: The Python bindings for the GDAL library
 Group: Sciences/Geosciences
 Requires: %{libname} = %{version}
-%py_requires -d
 %rename gdal-python
 
 %description -n python-%{name}
