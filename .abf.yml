@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   gdal-1.9.2.tar.gz: 7eda6a4d735b8d6903740e0acdd702b43515e351
+sources:
+  gdal-1.11.2.tar.xz: ccf3b322645c2d8857235f7b29d42eb732ecaaff

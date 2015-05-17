@@ -1,3 +1,5 @@
+%define Werror_cflags %{nil}
+
 %if %{_use_internal_dependency_generator}
 %define __noautoreq 'devel\\(libogdi31.*|devel\\(libcfitsio.*|libgrass.*'
 %else
@@ -20,13 +22,13 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 1.9.2
-Release: 4
+Version: 1.11.2
+Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
-Source0: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
+Source0: http://download.osgeo.org/gdal/CURRENT/%{name}-%{version}.tar.xz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 BuildRequires:	zlib-devel
@@ -108,8 +110,10 @@ find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 # Replace hard-coded library- and include paths
 sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
 
-%build
+# Fix mandir
+sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
 
+%build
 
 %configure \
 	--datadir=%_datadir/gdal \
@@ -143,9 +147,8 @@ sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
         %endif
         --with-threads
         
-perl -pi -e 's,PYTHON = no,PYTHON = /usr/bin/python,g' GDALmake.opt
-make
-make docs
+%make
+%make docs
 
 %install
 mkdir -p %{buildroot}/%py_platsitedir
@@ -177,6 +180,7 @@ chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 %{_libdir}/*.so
 %{_includedir}/*
 %{multiarch_bindir}/gdal-config
+%{_libdir}/pkgconfig/gdal.pc
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
