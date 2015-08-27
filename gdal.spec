@@ -6,7 +6,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 1
+%define major 2
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
 
