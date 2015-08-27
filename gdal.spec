@@ -1,4 +1,5 @@
 %define Werror_cflags %{nil}
+%define _disable_lto 1
 
 %if %{_use_internal_dependency_generator}
 %define __noautoreq 'devel\\(libogdi31.*|devel\\(libcfitsio.*|libgrass.*'
