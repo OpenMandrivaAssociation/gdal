@@ -22,8 +22,8 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 1.11.2
-Release: 2
+Version: 2.0.0
+Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -31,6 +31,7 @@ URL: http://www.gdal.org/
 Source0: http://download.osgeo.org/gdal/CURRENT/%{name}-%{version}.tar.xz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
+Patch5:	gdal-2.0.0-xopen-source.patch
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	png-devel
@@ -103,6 +104,7 @@ Development files for using the GDAL library
 %setup -q
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
+%patch5 -p1
 
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
