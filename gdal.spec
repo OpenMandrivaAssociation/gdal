@@ -40,6 +40,7 @@ BuildRequires:  postgresql-devel >=9.0
 BuildRequires:	jpeg-devel
 BuildRequires:	lzma-devel
 BuildRequires:	pkgconfig(proj) >= 4.4.7
+BuildRequires:	pkgconfig(python3)
 BuildRequires:  doxygen
 BuildRequires:  pkgconfig(libtirpc)
 %if %{build_libgrass}
