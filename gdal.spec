@@ -32,6 +32,9 @@ URL: http://www.gdal.org/
 Source0: http://download.osgeo.org/gdal/CURRENT/%{name}-%{version}.tar.xz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
+# cb - seems to use the /usr/bin/libtool as a linker which breaks
+Patch5:	gdal-fix-python.patch
+
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	png-devel
@@ -105,6 +108,7 @@ Development files for using the GDAL library
 %setup -q
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
+%patch5 -p1 -b .python
 
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
