@@ -7,7 +7,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 2
+%define major 20
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
 
@@ -23,7 +23,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 2.0.0
+Version: 2.0.1
 Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
@@ -32,7 +32,6 @@ URL: http://www.gdal.org/
 Source0: http://download.osgeo.org/gdal/CURRENT/%{name}-%{version}.tar.xz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
-Patch5:	gdal-2.0.0-xopen-source.patch
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	png-devel
@@ -106,7 +105,6 @@ Development files for using the GDAL library
 %setup -q
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
-%patch5 -p1
 
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
@@ -133,7 +131,6 @@ sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
         --with-hdf5=%_prefix      \
         --with-geos               \
         --with-jasper             \
-	--without-libtool	  \
         --with-png                \
         --with-gif                \
         --with-jpeg               \
@@ -152,7 +149,7 @@ sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
         --with-threads
         
 %make
-%make docs
+#make docs
 
 %install
 mkdir -p %{buildroot}/%py_platsitedir
