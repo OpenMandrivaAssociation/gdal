@@ -120,6 +120,14 @@ sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
 sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
 
 %build
+%ifarch aarch64
+# Workaround for a compile time failure last verified
+# with clang 3.8.0
+export CC=gcc
+export CXX=g++
+libtoolize --force
+autoreconf -f
+%endif
 
 %configure \
 	--datadir=%_datadir/gdal \
