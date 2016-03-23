@@ -30,6 +30,7 @@ Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source0: http://download.osgeo.org/gdal/CURRENT/%{name}-%{version}.tar.xz
+Patch2: gdal-2.0.2-libtoolsucks.patch
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
@@ -106,6 +107,7 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
+%patch2 -p1 -b .libtoolsux~
 %patch3 -p0 -b .libname
 %patch4 -p1 -b .pythontools
 %patch5 -p1 -b .python
@@ -122,7 +124,7 @@ sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
 %build
 %ifarch aarch64
 # Workaround for a compile time failure last verified
-# with clang 3.8.0
+# with clang 3.8.0-2
 export CC=gcc
 export CXX=g++
 libtoolize --force
@@ -131,6 +133,7 @@ autoreconf -f
 
 %configure \
 	--datadir=%_datadir/gdal \
+	--mandir=%_mandir \
 	--includedir=%_includedir/gdal \
         --with-dods-root=no \
         --with-ogdi=%{ogdidir} \
@@ -159,7 +162,9 @@ autoreconf -f
     	    --with-grass=%_libdir/grass64     \
         %endif
         --with-threads
-        
+
+sed -i -e 's,^INST_MAN.*,INST_MAN = %{_mandir},g' GDALmake.opt
+
 %make
 #make docs
 
@@ -168,7 +173,6 @@ mkdir -p %{buildroot}/%py_platsitedir
 export PYTHONPATH="%{buildroot}/%py_platsitedir"
 export DESTDIR=%{buildroot}
 unset PYTHONDONTWRITEBYTECODE
-export INST_MAN=%{_mandir}
 %makeinstall_std install-man
 perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
 
