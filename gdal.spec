@@ -27,7 +27,7 @@ Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
-Source0: ftp://ftp.remotesensing.org/pub/gdal/%{name}-%{version}.tar.gz
+Source0: http://download.osgeo.org/gdal/%{name}-%{version}.tar.gz
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 BuildRequires:	libpng-devel
