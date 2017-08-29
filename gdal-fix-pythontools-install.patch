@@ -1,11 +1,11 @@
---- gdal-1.7.1/swig/python/GNUmakefile~	2010-02-08 20:52:06.000000000 +0100
-+++ gdal-1.7.1/swig/python/GNUmakefile	2010-04-03 19:47:30.000000000 +0100
-@@ -69,7 +69,7 @@
- 	
- install:
+--- gdal-2.2.1/swig/python/GNUmakefile.0004~	2017-08-29 14:30:49.303050535 +0200
++++ gdal-2.2.1/swig/python/GNUmakefile	2017-08-29 14:31:11.789012503 +0200
+@@ -72,7 +72,7 @@ egg:
+ 
+ site_package_dir=$(shell $(PYTHON) -c "from __future__ import print_function;from distutils.sysconfig import get_python_lib;print(get_python_lib(prefix=\"$(prefix)\"))")
  
 -ifeq ($(PY_HAVE_SETUPTOOLS),1)
 +ifeq ($(PY_HAVE_SETUPTOOLS),0)
- 	$(PYTHON) setup.py install 
- else
- 	$(PYTHON) setup.py install --prefix=$(DESTDIR)$(prefix)
+     setup_opts=--single-version-externally-managed --record=record.txt
+ endif
+ 

@@ -1,11 +1,11 @@
---- gdal-2.0.2/GDALmake.opt.in.omv~	2016-03-22 23:29:53.383018605 +0100
-+++ gdal-2.0.2/GDALmake.opt.in	2016-03-22 23:30:25.622838009 +0100
-@@ -11,7 +11,7 @@ LIBTOOL	=	/usr/bin/libtool
+--- gdal-2.2.1/GDALmake.opt.in.libtoolsux~	2017-08-29 13:58:12.951503574 +0200
++++ gdal-2.2.1/GDALmake.opt.in	2017-08-29 14:00:44.231071347 +0200
+@@ -12,7 +12,7 @@ LIBTOOL	=	@LIBTOOL@
  ifeq ($(HAVE_LIBTOOL),yes)
  LIBTOOL_COMPILE_CC =	$(LIBTOOL) --mode=compile --tag=CC
  LIBTOOL_COMPILE_CXX =	$(LIBTOOL) --mode=compile --tag=CXX
 -LIBTOOL_LINK	=	$(LIBTOOL) --mode=link
 +LIBTOOL_LINK	=	$(LIBTOOL) --mode=link --tag=CXX
- LIBTOOL_INSTALL	=	$(LIBTOOL) --mode=install 
+ LIBTOOL_INSTALL	=	$(LIBTOOL) --mode=install
  LIBTOOL_FINISH	=	$(LIBTOOL) --mode=finish --silent
  LIBTOOL_CLEAN	=	$(LIBTOOL) --mode=clean

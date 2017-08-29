@@ -23,7 +23,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 2.0.2
+Version: 2.2.1
 Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
@@ -107,10 +107,7 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-%patch2 -p1 -b .libtoolsux~
-%patch3 -p0 -b .libname
-%patch4 -p1 -b .pythontools
-%patch5 -p1 -b .python
+%apply_patches
 
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
@@ -179,10 +176,6 @@ perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
 %multiarch_binaries %{buildroot}%{_bindir}/gdal-config
 
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
-
-install -d %{buildroot}%{_docdir}/%{name}
-mv %{buildroot}%{_bindir}/*.dox %{buildroot}%{_docdir}/%{name}
-chmod a-x %{buildroot}%{_docdir}/%{name}/*.dox
 
 %files
 %{_datadir}/gdal/
