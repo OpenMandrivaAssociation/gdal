@@ -173,8 +173,6 @@ unset PYTHONDONTWRITEBYTECODE
 %makeinstall_std install-man
 perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
 
-%multiarch_binaries %{buildroot}%{_bindir}/gdal-config
-
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 
 %files
@@ -182,14 +180,12 @@ find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 %{_bindir}/*
 %{_mandir}/man1/*.xz
 %exclude %{_bindir}/gdal-config
-%exclude %{multiarch_bindir}/gdal-config
 %doc NEWS VERSION
 
 %files -n %{libnamedev}
 %{_bindir}/%{name}-config
 %{_libdir}/*.so
 %{_includedir}/*
-%{multiarch_bindir}/gdal-config
 %{_libdir}/pkgconfig/gdal.pc
 
 %files -n %{libname}
