@@ -40,7 +40,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	png-devel
 BuildRequires:	giflib-devel
-BuildRequires:  postgresql-devel >=9.0
+BuildRequires:  postgresql-devel >= 9.0
 BuildRequires:	jpeg-devel
 BuildRequires:	lzma-devel
 BuildRequires:	pkgconfig(proj) >= 4.4.7
