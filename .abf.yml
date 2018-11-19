@@ -1,4 +1,5 @@
 removed_sources:
   gdal-2.2.1.tar.xz: d56342a6c6f1d89960537c365980e68b4a38b110
-sources:
   gdal-2.2.3.tar.xz: 7563bf2a3506069c546d32d10b8050945154397a
+sources:
+  gdal-2.3.2.tar.xz: b465d0eabb5fe779cfbb3ab3294f9cbfa6ceea7a

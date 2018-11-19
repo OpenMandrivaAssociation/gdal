@@ -23,14 +23,14 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 2.2.3
+Version: 2.3.2
 Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
-Source0: http://download.osgeo.org/gdal/CURRENT/%{name}-%{version}.tar.xz
-Patch2: gdal-2.0.2-libtoolsucks.patch
+Source0: http://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
+#Patch2: gdal-2.0.2-libtoolsucks.patch
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
@@ -180,6 +180,7 @@ find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 %{_datadir}/gdal/
 %{_bindir}/*
 %{_mandir}/man1/*.xz
+
 %exclude %{_bindir}/gdal-config
 %doc NEWS VERSION
 

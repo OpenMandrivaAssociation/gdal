@@ -7,5 +7,5 @@
 -#  define LIBNAME "libproj.so"
 +#  define LIBNAME "libproj.so.0"
  #endif
- 
- /************************************************************************/
+
+ #endif // PROJ_VERSION == 4
