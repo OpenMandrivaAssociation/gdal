@@ -30,7 +30,7 @@ Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source0: http://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
-#Patch2: gdal-2.0.2-libtoolsucks.patch
+Patch2: gdal-2.3.2-libtoolsucks.patch
 Patch3: gdal-1.6.0-fix-libname.patch
 Patch4: gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
