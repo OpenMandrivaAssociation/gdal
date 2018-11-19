@@ -36,6 +36,7 @@ Patch4: gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 Patch5:	gdal-fix-python.patch
 
+BuildRequires:	libtool-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	png-devel
