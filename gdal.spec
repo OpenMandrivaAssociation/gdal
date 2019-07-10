@@ -1,4 +1,3 @@
-%global ldflags %{ldflags} -fuse-ld=gold
 %define Werror_cflags %{nil}
 %define _disable_lto 1
 
@@ -25,7 +24,7 @@
 
 Name: gdal
 Version: 2.3.2
-Release: 1
+Release: 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -142,7 +141,7 @@ autoreconf -f
         --with-libz=%_prefix      \
 	--with-liblzma=yes        \
         --with-netcdf=%_prefix    \
-        --with-hdf5=%_prefix      \
+        --with-hdf5               \
         --with-geos               \
         --with-jasper             \
         --with-png                \
