@@ -1,3 +1,4 @@
+%global ldflags %{ldflags} -fuse-ld=gold
 %define Werror_cflags %{nil}
 %define _disable_lto 1
 
@@ -123,8 +124,8 @@ sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
 %ifarch aarch64
 # Workaround for a compile time failure last verified
 # with clang 3.8.0-2
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 libtoolize --force
 autoreconf -f
 %endif
