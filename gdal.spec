@@ -108,7 +108,7 @@ Development files for using the GDAL library
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
