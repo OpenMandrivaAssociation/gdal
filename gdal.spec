@@ -179,7 +179,7 @@ find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 %files
 %{_datadir}/gdal/
 %{_bindir}/*
-%{_mandir}/man1/*.xz
+%{_mandir}/man1/*
 
 %exclude %{_bindir}/gdal-config
 %doc NEWS VERSION

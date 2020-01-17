@@ -5,7 +5,7 @@
  	rm -f setup_vars.ini
  	echo 'GNM_ENABLED=$(GNM_ENABLED)' >> setup_vars.ini
 -	$(PYTHON) setup.py build
-+	CC=clang CXX=clang++ $(PYTHON) setup.py build
++	CC=clang CXX=clang++ LDFLAGS="-lpython3.8" $(PYTHON) setup.py build
  
  egg:
  	$(PYTHON) setup.py bdist_egg 
