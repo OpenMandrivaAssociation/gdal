@@ -1,0 +1,32 @@
+diff -up gdal-3.1.0/m4/ax_lib_expat.m4.omv~ gdal-3.1.0/m4/ax_lib_expat.m4
+diff -up gdal-3.1.0/m4/ax_lib_libkml.m4.omv~ gdal-3.1.0/m4/ax_lib_libkml.m4
+diff -up gdal-3.1.0/m4/ax_lib_sqlite3.m4.omv~ gdal-3.1.0/m4/ax_lib_sqlite3.m4
+--- gdal-3.1.0/m4/ax_lib_sqlite3.m4.omv~	2020-05-07 23:56:25.335462515 +0200
++++ gdal-3.1.0/m4/ax_lib_sqlite3.m4	2020-05-07 23:58:38.823064719 +0200
+@@ -77,9 +77,9 @@ AC_DEFUN([AX_LIB_SQLITE3],
+             unset ac_cv_lib_sqlite3_sqlite3_open
+             saved_LIBS="$LIBS"
+             LIBS=""
+-            AC_CHECK_LIB(sqlite3,sqlite3_open,LIB_SQLITE3_FOUND=yes,LIB_SQLITE3_FOUND=no,-L$ac_sqlite3_path/lib)
++            AC_CHECK_LIB(sqlite3,sqlite3_open,LIB_SQLITE3_FOUND=yes,LIB_SQLITE3_FOUND=no)
+             LIBS="$saved_LIBS"
+-            if test "$LIB_SQLITE3_FOUND" = "yes"; then
++            if test "$LIB_SQLITE3_FOUND" = "yes" -a "$ac_sqlite3_path" != "/usr"; then
+                 ac_sqlite3_ldflags="-L$ac_sqlite3_path/lib"
+             fi
+ 
+@@ -101,9 +101,9 @@ AC_DEFUN([AX_LIB_SQLITE3],
+                         unset ac_cv_lib_sqlite3_sqlite3_open
+                         saved_LIBS="$LIBS"
+                         LIBS=""
+-                        AC_CHECK_LIB(sqlite3,sqlite3_open,LIB_SQLITE3_FOUND=yes,LIB_SQLITE3_FOUND=no,-L$ac_sqlite3_path_tmp/lib)
++                        AC_CHECK_LIB(sqlite3,sqlite3_open,LIB_SQLITE3_FOUND=yes,LIB_SQLITE3_FOUND=no)
+                         LIBS="$saved_LIBS"
+-                        if test "$LIB_SQLITE3_FOUND" = "yes"; then
++                        if test "$LIB_SQLITE3_FOUND" = "yes" -a "$ac_sqlite3_path_tmp" != "/usr"; then
+                             ac_sqlite3_ldflags="-L$ac_sqlite3_path_tmp/lib"
+                         fi
+                     fi
+diff -up gdal-3.1.0/m4/ax_lib_xerces.m4.omv~ gdal-3.1.0/m4/ax_lib_xerces.m4
+diff -up gdal-3.1.0/m4/lib-link.m4.omv~ gdal-3.1.0/m4/lib-link.m4
+diff -up gdal-3.1.0/m4/lib-prefix.m4.omv~ gdal-3.1.0/m4/lib-prefix.m4

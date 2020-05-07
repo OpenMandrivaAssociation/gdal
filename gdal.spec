@@ -7,7 +7,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 20
+%define major 27
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
 
@@ -23,15 +23,15 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 2.3.2
-Release: 3
+Version: 3.1.0
+Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
 URL: http://www.gdal.org/
 Source0: http://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
 Patch2: gdal-2.3.2-libtoolsucks.patch
-Patch3: gdal-1.6.0-fix-libname.patch
+Patch3:	gdal-3.1.0-no-Lusrlib.patch
 Patch4: gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 Patch5:	gdal-fix-python.patch
@@ -110,6 +110,9 @@ Development files for using the GDAL library
 %setup -q
 %autopatch -p1
 
+aclocal -I m4
+autoconf
+
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 
@@ -137,8 +140,8 @@ autoreconf -f
         --with-ogdi=%{ogdidir} \
         --with-cfitsio=yes \
         --with-geotiff=internal   \
-        --with-libtiff=internal   \
-        --with-libz=%_prefix      \
+        --with-libtiff   \
+        --with-libz \
 	--with-liblzma=yes        \
         --with-netcdf=%_prefix    \
         --with-hdf5               \
@@ -156,6 +159,7 @@ autoreconf -f
         --with-xerces-lib='-lxerces-c' \
         --with-xerces-inc=%_includedir \
         --without-pcraster        \
+	--without-local		\
         %if %{build_libgrass}
     	    --with-grass=%_libdir/grass64     \
         %endif
@@ -172,7 +176,6 @@ export PYTHONPATH="%{buildroot}/%py_platsitedir"
 export DESTDIR=%{buildroot}
 unset PYTHONDONTWRITEBYTECODE
 %makeinstall_std install-man
-perl -pi -e 's,%{_prefix}/lib/,%{_libdir}/,g' %{buildroot}/%{_libdir}/libgdal.la
 
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 
