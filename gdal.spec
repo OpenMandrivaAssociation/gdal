@@ -24,7 +24,7 @@
 
 Name: gdal
 Version: 3.1.3
-Release: 1
+Release: 2
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -58,7 +58,7 @@ BuildRequires:	jasper-devel
 BuildRequires:	geos-devel >= 2.2.3
 BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
-BuildRequires:	cfitsio-devel
+BuildRequires:	pkgconfig(cfitsio)
 BuildRequires:	python-numpy-devel
 BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
@@ -107,8 +107,7 @@ Provides: %{name}-devel = %{version}
 Development files for using the GDAL library
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 aclocal -I m4
 autoconf
@@ -167,7 +166,7 @@ autoreconf -f
 
 sed -i -e 's,^INST_MAN.*,INST_MAN = %{_mandir},g' GDALmake.opt
 
-%make
+%make_build
 #make docs
 
 %install
@@ -175,7 +174,7 @@ mkdir -p %{buildroot}/%py_platsitedir
 export PYTHONPATH="%{buildroot}/%py_platsitedir"
 export DESTDIR=%{buildroot}
 unset PYTHONDONTWRITEBYTECODE
-%makeinstall_std install-man
+%make_install install-man
 
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 
