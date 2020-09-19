@@ -62,6 +62,7 @@ BuildRequires:	pkgconfig(cfitsio)
 BuildRequires:	python-numpy-devel
 BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
+BuildRequires:	pkgconfig(libunwind-llvm)
 #BuildRequires:	mysql-devel
 #BuildRequires:	libdap-devel
 #BuildRequires:	librx-devel
