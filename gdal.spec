@@ -7,7 +7,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 27
+%define major 28
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
 
@@ -23,8 +23,8 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 3.1.3
-Release: 2
+Version: 3.2.1
+Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
