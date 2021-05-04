@@ -7,7 +7,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 28
+%define major 29
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
 
@@ -23,8 +23,8 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 3.2.1
-Release: 2
+Version: 3.3.0
+Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
 License: MIT
@@ -62,6 +62,7 @@ BuildRequires:	pkgconfig(cfitsio)
 BuildRequires:	python-numpy-devel
 BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
+BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(libunwind-llvm)
 #BuildRequires:	mysql-devel
 #BuildRequires:	libdap-devel
@@ -123,14 +124,10 @@ sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
 sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
 
 %build
-%ifarch aarch64
-# Workaround for a compile time failure last verified
-# with clang 3.8.0-2
-#export CC=gcc
-#export CXX=g++
+cp -f %{_datadir}/gettext/config.rpath .
 libtoolize --force
-autoreconf -f
-%endif
+aclocal -I m4
+autoconf
 
 %configure \
 	--datadir=%_datadir/gdal \
