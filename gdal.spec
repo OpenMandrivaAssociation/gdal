@@ -23,7 +23,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 3.3.0
+Version: 3.3.1
 Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
