@@ -7,7 +7,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 29
+%define major 30
 %define libname %mklibname %{name} %{major}
 %define libnamedev %mklibname %{name} -d
 
@@ -23,7 +23,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 3.3.1
+Version: 3.4.1
 Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
@@ -182,7 +182,7 @@ find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 %{_mandir}/man1/*
 
 %exclude %{_bindir}/gdal-config
-%doc NEWS VERSION
+%doc VERSION
 
 %files -n %{libnamedev}
 %{_bindir}/%{name}-config
