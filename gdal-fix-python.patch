@@ -6,7 +6,7 @@ diff -up gdal-3.3.0/swig/python/GNUmakefile.4~ gdal-3.3.0/swig/python/GNUmakefil
  	rm -f setup_vars.ini
  	echo 'GNM_ENABLED=$(GNM_ENABLED)' >> setup_vars.ini
 -	$(PYTHON) setup.py build
-+	CC=clang CXX=clang++ LDFLAGS=-lpython3.9 $(PYTHON) setup.py build
++	CC=clang CXX=clang++ LDFLAGS=-lpython3.11 $(PYTHON) setup.py build
  
  egg:
  	$(PYTHON) setup.py bdist_egg
