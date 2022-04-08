@@ -23,7 +23,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 Name: gdal
-Version: 3.4.1
+Version: 3.4.2
 Release: 1
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Group: Sciences/Geosciences
@@ -64,7 +64,7 @@ BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(libunwind-llvm)
-#BuildRequires:	mysql-devel
+BuildRequires:	mysql-devel
 #BuildRequires:	libdap-devel
 #BuildRequires:	librx-devel
 BuildRequires:	unixODBC-devel
