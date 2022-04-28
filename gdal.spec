@@ -9,7 +9,7 @@
 
 %define major 30
 %define libname %mklibname %{name} %{major}
-%define libnamedev %mklibname %{name} -d
+%define devname %mklibname %{name} -d
 
 # Build gdal against libgrass. It is better to instead compile the new plugin
 # which builds against grass itself (and thus has more features than the
@@ -22,32 +22,32 @@
 %define ogdidir %{_includedir}
 %define ogdidir %{_includedir}/ogdi
 
-Name: gdal
-Version: 3.4.2
-Release: 2
-Summary: The Geospatial Data Abstraction Library (GDAL)
-Group: Sciences/Geosciences
-License: MIT
-URL: http://www.gdal.org/
-Source0: http://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
-Patch2: gdal-2.3.2-libtoolsucks.patch
-Patch3:	gdal-3.1.0-no-Lusrlib.patch
-Patch4: gdal-fix-pythontools-install.patch
+Summary:	The Geospatial Data Abstraction Library (GDAL)
+Name:		gdal
+Version:	3.4.2
+Release:	1
+Group:		Sciences/Geosciences
+License:	MIT
+URL:		https://gdal.org/
+Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
+Patch2:		gdal-2.3.2-libtoolsucks.patch
+Patch3:		gdal-3.1.0-no-Lusrlib.patch
+Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
-Patch5:	gdal-fix-python.patch
+Patch5:		gdal-fix-python.patch
 
 BuildRequires:	libtool-devel
 BuildRequires:	zlib-devel
 BuildRequires:	geotiff-devel >= 1.2.0
 BuildRequires:	png-devel
 BuildRequires:	giflib-devel
-BuildRequires:  postgresql-devel >= 9.0
+BuildRequires:	postgresql-devel >= 9.0
 BuildRequires:	jpeg-devel
 BuildRequires:	lzma-devel
 BuildRequires:	pkgconfig(proj) >= 4.4.7
 BuildRequires:	pkgconfig(python3)
-BuildRequires:  doxygen
-BuildRequires:  pkgconfig(libtirpc)
+BuildRequires:	doxygen
+BuildRequires:	pkgconfig(libtirpc)
 %if %{build_libgrass}
 Requires:	grass >= 6.4.0
 BuildRequires:	grass
@@ -81,6 +81,16 @@ efficient access, suitable for use in viewer applications,
 and also attempts to preserve coordinate systems and metadata.
 Python, C, and C++ interfaces are available.
 
+%files
+%{_datadir}/gdal/
+%{_bindir}/*
+%{_mandir}/man1/*
+
+%exclude %{_bindir}/gdal-config
+%doc VERSION
+
+#---------------------------------------------------------------------------
+
 %package -n python-%{name}
 Summary: The Python bindings for the GDAL library
 Group: Sciences/Geosciences
@@ -90,6 +100,11 @@ Requires: %{libname} = %{version}
 %description -n python-%{name}
 The Python bindings for the GDAL library
 
+%files -n python-%{name}
+%py_platsitedir/*
+
+#---------------------------------------------------------------------------
+
 %package -n %{libname}
 Summary: Libraries required for the GDAL library
 Group: System/Libraries
@@ -98,15 +113,28 @@ Provides: lib%{name} = %{version}
 %description -n %{libname}
 Libraries required for the GDAL library
 
-%package -n %{libnamedev}
+%files -n %{libname}
+%{_libdir}/*.so.%{major}*
+
+#---------------------------------------------------------------------------
+
+%package -n %{devname}
 Summary: Development files for using the GDAL library
 Group: Development/C
 Requires: %{libname} = %{version}-%{release}
 Provides: lib%{name}-devel = %{version}
 Provides: %{name}-devel = %{version}
 
-%description -n %{libnamedev}
+%description -n %{devname}
 Development files for using the GDAL library
+
+%files -n %{devname}
+%{_bindir}/%{name}-config
+%{_libdir}/*.so
+%{_includedir}/*
+%{_libdir}/pkgconfig/gdal.pc
+
+#---------------------------------------------------------------------------
 
 %prep
 %autosetup -p1
@@ -125,7 +153,7 @@ sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
 
 %build
 cp -f %{_datadir}/gettext/config.rpath .
-libtoolize --force
+libtoolize -fiv
 aclocal -I m4
 autoconf
 
@@ -133,34 +161,34 @@ autoconf
 	--datadir=%_datadir/gdal \
 	--mandir=%_mandir \
 	--includedir=%_includedir/gdal \
-        --with-dods-root=no \
-        --with-ogdi=%{ogdidir} \
-        --with-cfitsio=yes \
-        --with-geotiff=internal   \
-        --with-libtiff   \
-        --with-libz \
-	--with-liblzma=yes        \
-        --with-netcdf=%_prefix    \
-        --with-hdf5               \
-        --with-geos               \
-        --with-jasper             \
-        --with-png                \
-        --with-gif                \
-        --with-jpeg               \
-        --with-odbc               \
-        --with-sqlite3            \
-        --with-mysql              \
-        --with-curl               \
-        --with-python             \
-        --with-xerces             \
-        --with-xerces-lib='-lxerces-c' \
-        --with-xerces-inc=%_includedir \
-        --without-pcraster        \
-	--without-local		\
-        %if %{build_libgrass}
-    	    --with-grass=%_libdir/grass64     \
-        %endif
-        --with-threads
+	--with-dods-root=no \
+	--with-ogdi=%{ogdidir} \
+	--with-cfitsio=yes \
+	--with-geotiff=internal \
+	--with-libtiff \
+	--with-libz \
+	--with-liblzma=yes \
+	--with-netcdf=%_prefix \
+	--with-hdf5 \
+	--with-geos \
+	--with-jasper \
+	--with-png \
+	--with-gif \
+	--with-jpeg \
+	--with-odbc \
+	--with-sqlite3 \
+	--with-mysql \
+	--with-curl \
+	--with-python \
+	--with-xerces \
+	--with-xerces-lib='-lxerces-c' \
+	--with-xerces-inc=%_includedir \
+	--without-pcraster \
+	--without-local \
+	%if %{build_libgrass}
+		--with-grass=%_libdir/grass64 \
+	%endif
+	--with-threads
 
 sed -i -e 's,^INST_MAN.*,INST_MAN = %{_mandir},g' GDALmake.opt
 
@@ -176,22 +204,3 @@ unset PYTHONDONTWRITEBYTECODE
 
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
 
-%files
-%{_datadir}/gdal/
-%{_bindir}/*
-%{_mandir}/man1/*
-
-%exclude %{_bindir}/gdal-config
-%doc VERSION
-
-%files -n %{libnamedev}
-%{_bindir}/%{name}-config
-%{_libdir}/*.so
-%{_includedir}/*
-%{_libdir}/pkgconfig/gdal.pc
-
-%files -n %{libname}
-%{_libdir}/*.so.%{major}*
-
-%files -n python-%{name}
-%py_platsitedir/*
