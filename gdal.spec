@@ -7,8 +7,9 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 30
-%define libname %mklibname %{name} %{major}
+%define major 31
+%define oldlibname %mklibname %{name} 30
+%define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
 
 # Build gdal against libgrass. It is better to instead compile the new plugin
@@ -24,7 +25,7 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.4.2
+Version:	3.5.1
 Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
@@ -109,12 +110,14 @@ The Python bindings for the GDAL library
 Summary: Libraries required for the GDAL library
 Group: System/Libraries
 Provides: lib%{name} = %{version}
+Obsoletes: %{oldlibname} < %{EVRD}
 
 %description -n %{libname}
 Libraries required for the GDAL library
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
+%{_libdir}/gdalplugins
 
 #---------------------------------------------------------------------------
 
@@ -203,4 +206,3 @@ unset PYTHONDONTWRITEBYTECODE
 %make_install install-man
 
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
-
