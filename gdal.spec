@@ -23,6 +23,8 @@
 %define ogdidir %{_includedir}
 %define ogdidir %{_includedir}/ogdi
 
+%bcond_with mono
+
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
 Version:	3.6.0
@@ -71,7 +73,9 @@ BuildRequires:	xerces-c-devel
 BuildRequires:	hdf5-devel
 BuildRequires:	swig
 BuildRequires:	jdk-current
+%if %{with mono}
 BuildRequires:	mono
+%endif
 BuildRequires:	cmake ninja
 
 %description
@@ -122,6 +126,7 @@ Libraries required for the GDAL library
 %{_libdir}/gdalplugins
 
 #---------------------------------------------------------------------------
+%if %{with mono}
 %package csharp
 Summary: C# bindings for the GDAL library
 Group: Development/Java
@@ -131,6 +136,7 @@ C# bindings for the GDAL library
 
 %files csharp
 %{_datadir}/csharp/*
+%endif
 
 #---------------------------------------------------------------------------
 %package java
