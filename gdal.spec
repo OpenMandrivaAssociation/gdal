@@ -24,6 +24,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 %bcond_with mono
+%bcond_with java
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
@@ -72,7 +73,9 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
 BuildRequires:	hdf5-devel
 BuildRequires:	swig
+%if %{with java}
 BuildRequires:	jdk-current
+%endif
 %if %{with mono}
 BuildRequires:	mono
 %endif
@@ -139,6 +142,7 @@ C# bindings for the GDAL library
 %endif
 
 #---------------------------------------------------------------------------
+%if %{with java}
 %package java
 Summary: Java bindings for the GDAL library
 Group: Development/Java
@@ -150,6 +154,7 @@ Java bindings for the GDAL library
 %{_datadir}/java/gdal*
 # FIXME binaries don't belong in %{_datadir}...
 %{_datadir}/java/libgdalalljni.so
+%endif
 
 #---------------------------------------------------------------------------
 
