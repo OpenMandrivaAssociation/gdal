@@ -7,7 +7,7 @@
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
 
-%define major 31
+%define major 32
 %define oldlibname %mklibname %{name} 30
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
@@ -25,17 +25,15 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.5.2
+Version:	3.6.0
 Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
 Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
-Patch2:		gdal-2.3.2-libtoolsucks.patch
-Patch3:		gdal-3.1.0-no-Lusrlib.patch
-Patch4:		gdal-fix-pythontools-install.patch
+#Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
-Patch5:		gdal-fix-python.patch
+#Patch5:		gdal-fix-python.patch
 
 BuildRequires:	libtool-devel
 BuildRequires:	zlib-devel
@@ -72,6 +70,9 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
 BuildRequires:	hdf5-devel
 BuildRequires:	swig
+BuildRequires:	jdk-current
+BuildRequires:	mono
+BuildRequires:	cmake ninja
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -83,6 +84,7 @@ and also attempts to preserve coordinate systems and metadata.
 Python, C, and C++ interfaces are available.
 
 %files
+%{_datadir}/bash-completion/completions/*
 %{_datadir}/gdal/
 %{_bindir}/*
 %{_mandir}/man1/*
@@ -120,6 +122,30 @@ Libraries required for the GDAL library
 %{_libdir}/gdalplugins
 
 #---------------------------------------------------------------------------
+%package csharp
+Summary: C# bindings for the GDAL library
+Group: Development/Java
+
+%description csharp
+C# bindings for the GDAL library
+
+%files csharp
+%{_datadir}/csharp/*
+
+#---------------------------------------------------------------------------
+%package java
+Summary: Java bindings for the GDAL library
+Group: Development/Java
+
+%description java
+Java bindings for the GDAL library
+
+%files java
+%{_datadir}/java/gdal*
+# FIXME binaries don't belong in %{_datadir}...
+%{_datadir}/java/libgdalalljni.so
+
+#---------------------------------------------------------------------------
 
 %package -n %{devname}
 Summary: Development files for using the GDAL library
@@ -136,73 +162,24 @@ Development files for using the GDAL library
 %{_libdir}/*.so
 %{_includedir}/*
 %{_libdir}/pkgconfig/gdal.pc
+%{_libdir}/cmake/gdal
 
 #---------------------------------------------------------------------------
 
 %prep
 %autosetup -p1
-
-aclocal -I m4
-autoconf
-
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 
-# Replace hard-coded library- and include paths
-sed -i 's|@LIBTOOL@|%{_bindir}/libtool|g' GDALmake.opt.in
-
-# Fix mandir
-sed -i "s|^mandir=.*|mandir='\${prefix}/share/man'|" configure
+%cmake -G Ninja
 
 %build
-cp -f %{_datadir}/gettext/config.rpath .
-libtoolize -fiv
-aclocal -I m4
-autoconf
-
-%configure \
-	--datadir=%_datadir/gdal \
-	--mandir=%_mandir \
-	--includedir=%_includedir/gdal \
-	--with-dods-root=no \
-	--with-ogdi=%{ogdidir} \
-	--with-cfitsio=yes \
-	--with-geotiff=internal \
-	--with-libtiff \
-	--with-libz \
-	--with-liblzma=yes \
-	--with-netcdf=%_prefix \
-	--with-hdf5 \
-	--with-geos \
-	--with-jasper \
-	--with-png \
-	--with-gif \
-	--with-jpeg \
-	--with-odbc \
-	--with-sqlite3 \
-	--with-mysql \
-	--with-curl \
-	--with-python \
-	--with-xerces \
-	--with-xerces-lib='-lxerces-c' \
-	--with-xerces-inc=%_includedir \
-	--without-pcraster \
-	--without-local \
-	%if %{build_libgrass}
-		--with-grass=%_libdir/grass64 \
-	%endif
-	--with-threads
-
-sed -i -e 's,^INST_MAN.*,INST_MAN = %{_mandir},g' GDALmake.opt
-
-%make_build
-#make docs
+%ninja_build -C build
 
 %install
-mkdir -p %{buildroot}/%py_platsitedir
-export PYTHONPATH="%{buildroot}/%py_platsitedir"
-export DESTDIR=%{buildroot}
-unset PYTHONDONTWRITEBYTECODE
-%make_install install-man
+#mkdir -p %{buildroot}/%py_platsitedir
+#export PYTHONPATH="%{buildroot}/%py_platsitedir"
+#export DESTDIR=%{buildroot}
+%ninja_install -C build
 
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
