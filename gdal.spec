@@ -23,17 +23,19 @@
 %define ogdidir %{_includedir}
 %define ogdidir %{_includedir}/ogdi
 
-%bcond_with mono
-%bcond_with java
+%bcond_without mono
+%bcond_without java
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.6.2
+Version:	3.6.3
 Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
 Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
+Patch0:		gdal-3.6.3-c++17.patch
+Patch1:		gdal-3.6.3-openjdk-18.patch
 #Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 #Patch5:		gdal-fix-python.patch

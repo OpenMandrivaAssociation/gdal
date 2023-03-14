@@ -1,0 +1,12 @@
+diff -up gdal-3.6.3/CMakeLists.txt.omv~ gdal-3.6.3/CMakeLists.txt
+--- gdal-3.6.3/CMakeLists.txt.omv~	2023-03-14 14:39:13.818131103 +0100
++++ gdal-3.6.3/CMakeLists.txt	2023-03-14 14:39:21.620178966 +0100
+@@ -38,7 +38,7 @@ define_property(
+ #
+ # check compiler and set preferences.
+ if (NOT CMAKE_CXX_STANDARD)
+-    set(CMAKE_CXX_STANDARD 11)
++    set(CMAKE_CXX_STANDARD 17)
+     set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ endif()
+ 
