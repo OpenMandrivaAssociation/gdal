@@ -23,13 +23,13 @@
 %define ogdidir %{_includedir}
 %define ogdidir %{_includedir}/ogdi
 
-%bcond_without mono
+%bcond_with mono
 %bcond_without java
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.6.3
-Release:	2
+Version:	3.6.4
+Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
