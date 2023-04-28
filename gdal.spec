@@ -63,6 +63,11 @@ BuildRequires:	geos-devel >= 2.2.3
 BuildRequires:	netcdf-devel >= 3.6.2
 BuildRequires:	ogdi-devel
 BuildRequires:	pkgconfig(cfitsio)
+BuildRequires:	pkgconfig(poppler)
+BuildRequires:	pkgconfig(OpenEXR)
+BuildRequires:	pkgconfig(libopenjp2)
+BuildRequires:	pkgconfig(liblz4)
+BuildRequires:	pkgconfig(OpenCL)
 BuildRequires:	python-numpy-devel
 BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
@@ -75,8 +80,10 @@ BuildRequires:	unixODBC-devel
 BuildRequires:	xerces-c-devel
 BuildRequires:	hdf5-devel
 BuildRequires:	swig
+BuildRequires:	bison
 %if %{with java}
 BuildRequires:	jdk-current
+BuildRequires:	jre-gui-current
 %endif
 %if %{with mono}
 BuildRequires:	mono
