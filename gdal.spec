@@ -6,6 +6,7 @@
 %else
 %define _requires_exceptions devel\(libogdi31.*\)\\|devel\(libcfitsio.*\)\\|libgrass
 %endif
+%global __requires_exclude cmake\\(OpenJPEG\\)
 
 %define major 32
 %define oldlibname %mklibname %{name} 30
