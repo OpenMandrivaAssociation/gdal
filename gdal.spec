@@ -68,6 +68,16 @@ BuildRequires:	pkgconfig(OpenEXR)
 BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(liblz4)
 BuildRequires:	pkgconfig(OpenCL)
+BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(expat)
+BuildRequires:	pkgconfig(cryptopp)
+BuildRequires:	pkgconfig(geotiff)
+BuildRequires:	pkgconfig(libpcre2-posix)
+BuildRequires:	pkgconfig(libpcre2-8)
+BuildRequires:	pkgconfig(libpcre2-16)
+BuildRequires:	pkgconfig(libpcre2-32)
+BuildRequires:	pkgconfig(libwebp)
+BuildRequires:	pkgconfig(json-c)
 BuildRequires:	python-numpy-devel
 BuildRequires:	python-setuptools
 BuildRequires:	sqlite3-devel
@@ -190,6 +200,8 @@ Development files for using the GDAL library
 %autosetup -p1
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
+
+. %{_sysconfdir}/profile.d/90java.sh
 
 %cmake -G Ninja
 
