@@ -206,9 +206,11 @@ find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 %cmake -G Ninja
 
 %build
+. %{_sysconfdir}/profile.d/90java.sh
 %ninja_build -C build
 
 %install
+. %{_sysconfdir}/profile.d/90java.sh
 #mkdir -p %{buildroot}/%py_platsitedir
 #export PYTHONPATH="%{buildroot}/%py_platsitedir"
 #export DESTDIR=%{buildroot}
