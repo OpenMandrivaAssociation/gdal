@@ -24,7 +24,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 %bcond_with mono
-%bcond_without java
+%bcond_with java
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
@@ -201,16 +201,22 @@ Development files for using the GDAL library
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 
+%if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
+%endif
 
 %cmake -G Ninja
 
 %build
+%if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
+%endif
 %ninja_build -C build
 
 %install
+%if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
+%endif
 #mkdir -p %{buildroot}/%py_platsitedir
 #export PYTHONPATH="%{buildroot}/%py_platsitedir"
 #export DESTDIR=%{buildroot}
