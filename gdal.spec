@@ -8,7 +8,7 @@
 %endif
 %global __requires_exclude cmake\\(OpenJPEG\\)
 
-%define major 32
+%define major 33
 %define oldlibname %mklibname %{name} 30
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
@@ -29,14 +29,15 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.6.4
-Release:	3
+Version:	3.7.0
+Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
 Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
 Patch0:		gdal-3.6.3-c++17.patch
 Patch1:		gdal-3.6.3-openjdk-18.patch
+Patch2:		gdal-fix-missing-includes.patch
 #Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 #Patch5:		gdal-fix-python.patch
@@ -202,11 +203,22 @@ Development files for using the GDAL library
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 
+# DOS madness in files copied from ancient zlib...
+sed -i -e 's,FAR ,,g' frmts/zlib/contrib/infback9/*.{c,h} port/cpl_vsil_gzip.cpp
+sed -i -e 's,zmemcpy,memcpy,g' frmts/zlib/contrib/infback9/infback9.c
+
 %if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
 %endif
 
-%cmake -G Ninja
+%cmake \
+	-DGDAL_USE_PNG_INTERNAL:BOOL=OFF \
+	-DGDAL_USE_ZLIB_INTERNAL:BOOL=OFF \
+	-DGDAL_USE_GIF_INTERNAL:BOOL=OFF \
+	-DGDAL_USE_TIFF_INTERNAL:BOOL=OFF \
+	-DGDAL_USE_GEOTIFF_INTERNAL:BOOL=OFF \
+	-DGDAL_USE_JPEG_INTERNAL:BOOL=OFF \
+	-G Ninja
 
 %build
 %if %{with java}

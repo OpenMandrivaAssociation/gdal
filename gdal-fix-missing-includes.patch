@@ -1,0 +1,11 @@
+diff -up gdal-3.7.0/frmts/zlib/contrib/infback9/infback9.c.omv~ gdal-3.7.0/frmts/zlib/contrib/infback9/infback9.c
+--- gdal-3.7.0/frmts/zlib/contrib/infback9/infback9.c.omv~	2023-06-07 21:15:00.108193345 +0200
++++ gdal-3.7.0/frmts/zlib/contrib/infback9/infback9.c	2023-06-07 21:15:08.733281136 +0200
+@@ -3,6 +3,7 @@
+  * For conditions of distribution and use, see copyright notice in zlib.h
+  */
+ 
++#include <string.h>
+ #include "minified_zutil.h"
+ #include "infback9.h"
+ #include "inftree9.h"
