@@ -29,8 +29,8 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.7.1
-Release:	3
+Version:	3.7.2
+Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
@@ -211,6 +211,9 @@ sed -i -e 's,zmemcpy,memcpy,g' frmts/zlib/contrib/infback9/infback9.c
 . %{_sysconfdir}/profile.d/90java.sh
 %endif
 
+# The system version that comes with curl >= 8.3 is sufficient
+rm cmake/modules/packages/FindCURL.cmake
+
 # PoDoFo forced off because gdal isn't compatible with releases >= 0.10
 %cmake \
 	-DGDAL_USE_PNG_INTERNAL:BOOL=OFF \
@@ -219,7 +222,7 @@ sed -i -e 's,zmemcpy,memcpy,g' frmts/zlib/contrib/infback9/infback9.c
 	-DGDAL_USE_TIFF_INTERNAL:BOOL=OFF \
 	-DGDAL_USE_GEOTIFF_INTERNAL:BOOL=OFF \
 	-DGDAL_USE_JPEG_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_PODOFO:BOOL=OFF \
+	-DGDAL_USE_PODOFO:BOOL=ON \
 	-G Ninja
 
 %build
