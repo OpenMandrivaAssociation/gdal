@@ -1,0 +1,12 @@
+diff -up gdal-3.7.2/cmake/modules/packages/FindCURL.cmake.omv~ gdal-3.7.2/cmake/modules/packages/FindCURL.cmake
+--- gdal-3.7.2/cmake/modules/packages/FindCURL.cmake.omv~	2023-10-07 11:14:29.198792755 +0200
++++ gdal-3.7.2/cmake/modules/packages/FindCURL.cmake	2023-10-07 11:15:23.860357929 +0200
+@@ -69,7 +69,7 @@ Set ``CURL_USE_STATIC_LIBS`` to ``TRUE``
+ #include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+ include(FindPackageHandleStandardArgs)
+ 
+-if(NOT CURL_NO_CURL_CMAKE)
++if(FALSE)
+   # do a find package call to specifically look for the CMake version
+   # of curl
+   find_package(CURL QUIET NO_MODULE)

@@ -38,9 +38,12 @@ Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
 Patch0:		gdal-3.6.3-c++17.patch
 Patch1:		gdal-3.6.3-openjdk-18.patch
 Patch2:		gdal-fix-missing-includes.patch
+Patch3:		gdal-3.7.2-work-around-duplicate-curl-cmake-checks.patch
 #Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 #Patch5:		gdal-fix-python.patch
+# Fix PoDoFo 0.10.x
+Patch6:		https://github.com/OSGeo/gdal/pull/8361.patch
 
 BuildRequires:	libtool-devel
 BuildRequires:	zlib-devel
@@ -210,9 +213,6 @@ sed -i -e 's,zmemcpy,memcpy,g' frmts/zlib/contrib/infback9/infback9.c
 %if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
 %endif
-
-# The system version that comes with curl >= 8.3 is sufficient
-rm cmake/modules/packages/FindCURL.cmake
 
 # PoDoFo forced off because gdal isn't compatible with releases >= 0.10
 %cmake \
