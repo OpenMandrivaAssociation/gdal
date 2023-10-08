@@ -60,7 +60,8 @@ BuildRequires:	pkgconfig(libtirpc)
 BuildRequires:	pkgconfig(libdeflate)
 BuildRequires:	locales-extra-charsets
 BuildRequires:	qhull-devel
-BuildRequires:	pkgconfig(freexl)
+# Can be used, but lives in unsupported
+#BuildRequires:	pkgconfig(freexl)
 %if %{build_libgrass}
 Requires:	grass >= 6.4.0
 BuildRequires:	grass
