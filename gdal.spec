@@ -57,6 +57,10 @@ BuildRequires:	pkgconfig(proj) >= 4.4.7
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(libtirpc)
+BuildRequires:	pkgconfig(libdeflate)
+BuildRequires:	locales-extra-charsets
+BuildRequires:	qhull-devel
+BuildRequires:	pkgconfig(freexl)
 %if %{build_libgrass}
 Requires:	grass >= 6.4.0
 BuildRequires:	grass
@@ -100,6 +104,7 @@ BuildRequires:	bison
 %if %{with java}
 BuildRequires:	jdk-current
 BuildRequires:	jre-gui-current
+BuildRequires:	ant
 %endif
 %if %{with mono}
 BuildRequires:	mono
