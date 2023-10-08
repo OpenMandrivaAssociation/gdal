@@ -25,7 +25,7 @@
 %define ogdidir %{_includedir}/ogdi
 
 %bcond_with mono
-%bcond_with java
+%bcond_without java
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
@@ -77,6 +77,7 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(cryptopp)
 BuildRequires:	pkgconfig(geotiff)
+BuildRequires:	pkgconfig(libpodofo)
 BuildRequires:	pkgconfig(libpcre2-posix)
 BuildRequires:	pkgconfig(libpcre2-8)
 BuildRequires:	pkgconfig(libpcre2-16)
