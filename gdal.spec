@@ -29,8 +29,8 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.7.2
-Release:	2
+Version:	3.7.3
+Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
@@ -42,8 +42,6 @@ Patch3:		gdal-3.7.2-work-around-duplicate-curl-cmake-checks.patch
 #Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 #Patch5:		gdal-fix-python.patch
-# Fix PoDoFo 0.10.x
-Patch6:		https://github.com/OSGeo/gdal/pull/8361.patch
 
 BuildRequires:	libtool-devel
 BuildRequires:	zlib-devel
