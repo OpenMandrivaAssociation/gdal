@@ -8,7 +8,7 @@
 %endif
 %global __requires_exclude cmake\\(OpenJPEG\\)
 
-%define major 33
+%define major 34
 %define oldlibname %mklibname %{name} 30
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
@@ -29,7 +29,7 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.7.3
+Version:	3.8.1
 Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
@@ -181,8 +181,7 @@ Java bindings for the GDAL library
 
 %files java
 %{_datadir}/java/gdal*
-# FIXME binaries don't belong in %{_datadir}...
-%{_datadir}/java/libgdalalljni.so
+%{_libdir}/jni/libgdalalljni.so
 %endif
 
 #---------------------------------------------------------------------------
