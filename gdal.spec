@@ -73,6 +73,7 @@ BuildRequires:	ogdi-devel
 BuildRequires:	pkgconfig(cfitsio)
 BuildRequires:	pkgconfig(poppler)
 BuildRequires:	pkgconfig(OpenEXR)
+BuildRequires:	pkgconfig(libarchive)
 BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(liblz4)
 BuildRequires:	pkgconfig(OpenCL)
