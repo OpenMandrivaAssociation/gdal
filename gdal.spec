@@ -8,7 +8,7 @@
 %endif
 %global __requires_exclude cmake\\(OpenJPEG\\)
 
-%define major 34
+%define major 35
 %define oldlibname %mklibname %{name} 30
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
@@ -29,14 +29,14 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.8.5
-Release:	3
+Version:	3.9.0
+Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
 Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
-Patch0:		gdal-3.6.3-c++17.patch
-Patch1:		gdal-3.6.3-openjdk-18.patch
+#Patch0:		gdal-3.6.3-c++17.patch
+#Patch1:		gdal-3.6.3-openjdk-18.patch
 Patch2:		gdal-fix-missing-includes.patch
 Patch3:		gdal-3.7.2-work-around-duplicate-curl-cmake-checks.patch
 Patch4:		gdal-3.8.5-compile.patch
@@ -111,7 +111,14 @@ BuildRequires:	ant
 %if %{with mono}
 BuildRequires:	mono
 %endif
-BuildRequires:	cmake ninja
+BuildSystem:	cmake
+BuildOption:	-DGDAL_USE_PNG_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_ZLIB_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_GIF_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_TIFF_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_GEOTIFF_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_JPEG_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_PODOFO:BOOL=ON
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -208,8 +215,7 @@ Development files for using the GDAL library
 
 #---------------------------------------------------------------------------
 
-%prep
-%autosetup -p1
+%prep -a
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a-x {} \;
 find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 
@@ -217,34 +223,20 @@ find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 sed -i -e 's,FAR ,,g' frmts/zlib/contrib/infback9/*.{c,h} port/cpl_vsil_gzip.cpp
 sed -i -e 's,zmemcpy,memcpy,g' frmts/zlib/contrib/infback9/infback9.c
 
+%conf -p
 %if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
 %endif
 
-# PoDoFo forced off because gdal isn't compatible with releases >= 0.10
-%cmake \
-	-DGDAL_USE_PNG_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_ZLIB_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_GIF_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_TIFF_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_GEOTIFF_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_JPEG_INTERNAL:BOOL=OFF \
-	-DGDAL_USE_PODOFO:BOOL=ON \
-	-G Ninja
-
-%build
+%build -p
 %if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
 %endif
-%ninja_build -C build
 
-%install
+%install -p
 %if %{with java}
 . %{_sysconfdir}/profile.d/90java.sh
 %endif
-#mkdir -p %{buildroot}/%py_platsitedir
-#export PYTHONPATH="%{buildroot}/%py_platsitedir"
-#export DESTDIR=%{buildroot}
-%ninja_install -C build
 
+%install -a
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
