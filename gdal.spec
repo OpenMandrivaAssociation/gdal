@@ -59,6 +59,8 @@ BuildRequires:	pkgconfig(libtirpc)
 BuildRequires:	pkgconfig(libdeflate)
 BuildRequires:	locales-extra-charsets
 BuildRequires:	qhull-devel
+# For clang-scan-deps
+BuildRequires:	clang-tools
 # Can be used, but lives in unsupported
 #BuildRequires:	pkgconfig(freexl)
 %if %{build_libgrass}
@@ -83,6 +85,7 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(cryptopp)
 BuildRequires:	pkgconfig(geotiff)
+BuildRequires:	pkgconfig(libopenjp2)
 BuildRequires:	pkgconfig(libpodofo)
 BuildRequires:	pkgconfig(libpcre2-posix)
 BuildRequires:	pkgconfig(libpcre2-8)
