@@ -30,7 +30,7 @@
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
 Version:	3.9.1
-Release:	5
+Release:	6
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
