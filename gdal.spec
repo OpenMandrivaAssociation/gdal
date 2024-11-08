@@ -8,7 +8,7 @@
 %endif
 %global __requires_exclude cmake\\(OpenJPEG\\)
 
-%define major 35
+%define major 36
 %define oldlibname %mklibname %{name} 30
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
@@ -29,8 +29,8 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:		gdal
-Version:	3.9.3
-Release:	2
+Version:	3.10.0
+Release:	1
 Group:		Sciences/Geosciences
 License:	MIT
 URL:		https://gdal.org/
