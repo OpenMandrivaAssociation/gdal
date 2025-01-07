@@ -42,6 +42,7 @@ Patch3:		gdal-3.7.2-work-around-duplicate-curl-cmake-checks.patch
 #Patch4:		gdal-fix-pythontools-install.patch
 # cb - seems to use the /usr/bin/libtool as a linker which breaks
 #Patch5:		gdal-fix-python.patch
+Patch6:		gdal-3.10.0-poppler-25.patch
 
 BuildRequires:	libtool-devel
 BuildRequires:	zlib-devel
