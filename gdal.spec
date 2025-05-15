@@ -8,7 +8,7 @@
 %endif
 %global __requires_exclude cmake\\(OpenJPEG\\)
 
-%define major 36
+%define major 37
 %define oldlibname %mklibname %{name} 30
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
