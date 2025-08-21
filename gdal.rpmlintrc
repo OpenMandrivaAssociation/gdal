@@ -1,1 +1,8 @@
-addFilter("E: non-readable.*")
+# Not apply
+#addFilter("E: non-readable.*")
+
+# We cannot add what upstream does not
+addFilter("W: no-manual-page-for-binary")
+
+# The JAR index is ignored at run-time since JDK 18
+addFilter("W: jar-not-indexed")
