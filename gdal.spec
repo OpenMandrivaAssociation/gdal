@@ -9,7 +9,7 @@
 %endif
 %global __requires_exclude cmake\\(OpenJPEG\\)
 
-%define	major 37
+%define	major 38
 %define	oldlibname %mklibname %{name} 30
 %define	libname %mklibname %{name}
 %define	devname %mklibname %{name} -d
@@ -30,8 +30,8 @@
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
 Name:	gdal
-Version:	3.11.5
-Release:	3
+Version:	3.12.0
+Release:	1
 Group:	Sciences/Geosciences
 License:	MIT
 Url:		https://gdal.org/
@@ -40,7 +40,6 @@ Source100:	gdal.rpmlintrc
 Patch0:		gdal-fix-missing-includes.patch
 Patch1:		gdal-3.7.2-work-around-duplicate-curl-cmake-checks.patch
 Patch2:		gdal-3.10.0-poppler-25.patch
-Patch3:		gdal-3.11.3-fix-python-shebangs.patch
 %if %{with java}
 BuildRequires:	ant
 BuildRequires:	jdk-current
@@ -62,6 +61,7 @@ BuildRequires:	swig
 BuildRequires:	gettext-devel
 BuildRequires:	giflib-devel
 BuildRequires:	hdf5-devel
+BuildRequires:	make
 # Missing, but needed?
 #BuildRequires:	libdap-devel
 #BuildRequires:	librx-devel
@@ -102,7 +102,7 @@ BuildRequires:	pkgconfig(libunwind-llvm)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(libzstd)
-BuildRequires:pkgconfig(muparser)
+BuildRequires:	pkgconfig(muparser)
 BuildRequires:	pkgconfig(netcdf) >= 3.6.2
 BuildRequires:	pkgconfig(odbc)
 BuildRequires:	pkgconfig(ogdi)
@@ -119,6 +119,16 @@ BuildRequires:	pkgconfig(zlib)
 %if %{with mono}
 BuildRequires:	mono
 %endif
+
+BuildSystem:	cmake
+BuildOption:	-DGDAL_USE_PNG_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_ZLIB_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_GIF_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_TIFF_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_GEOTIFF_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_JPEG_INTERNAL:BOOL=OFF
+BuildOption:	-DGDAL_USE_PODOFO:BOOL=ON
+BuildOption:	-DBUILD_TESTING:BOOL=OFF
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying C/C++ API for
@@ -228,31 +238,24 @@ find . -name '*.h' -o -name '*.cpp' -executable -exec chmod a+r {} \;
 sed -i -e 's,FAR ,,g' frmts/zlib/contrib/infback9/*.{c,h} port/cpl_vsil_gzip.cpp
 sed -i -e 's,zmemcpy,memcpy,g' frmts/zlib/contrib/infback9/infback9.c
 
-
-%build
+%conf -p
 %if %{with java}
 %{_sysconfdir}/profile.d/90java.sh
 %endif
-%cmake -DGDAL_USE_PNG_INTERNAL:BOOL=OFF \
-		-DGDAL_USE_ZLIB_INTERNAL:BOOL=OFF \
-		-DGDAL_USE_GIF_INTERNAL:BOOL=OFF \
-		-DGDAL_USE_TIFF_INTERNAL:BOOL=OFF \
-		-DGDAL_USE_GEOTIFF_INTERNAL:BOOL=OFF \
-		-DGDAL_USE_JPEG_INTERNAL:BOOL=OFF \
-		-DGDAL_USE_PODOFO:BOOL=ON \
-		-DBUILD_TESTING=OFF
 
-%make_build
-
-
-%install
+%build -p
 %if %{with java}
 %{_sysconfdir}/profile.d/90java.sh
 %endif
-%make_install -C build
 
+%install -p
+%if %{with java}
+%{_sysconfdir}/profile.d/90java.sh
+%endif
+
+%install -a
 # Fix files with wrong python shebangs
-sed -i 's|^#!python|#!/usr/bin/python3|' %{buildroot}%{_bindir}/*.py
+sed -i 's|^#!python|#!/usr/bin/python|' %{buildroot}%{_bindir}/*.py
 
 # Fix perms for python files
 find %{buildroot}%{py_platsitedir} -name '*.py' -exec chmod a-x {} \;
