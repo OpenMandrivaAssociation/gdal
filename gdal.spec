@@ -29,10 +29,10 @@
 %bcond_without java
 
 Summary:	The Geospatial Data Abstraction Library (GDAL)
-Name:	gdal
-Version:	3.12.1
+Name:		gdal
+Version:	3.12.2
 Release:	1
-Group:	Sciences/Geosciences
+Group:		Sciences/Geosciences
 License:	MIT
 Url:		https://gdal.org/
 Source0:	https://download.osgeo.org/gdal/%{version}/%{name}-%{version}.tar.xz
@@ -40,7 +40,6 @@ Source100:	gdal.rpmlintrc
 Patch0:		gdal-fix-missing-includes.patch
 Patch1:		gdal-3.7.2-work-around-duplicate-curl-cmake-checks.patch
 Patch2:		gdal-3.10.0-poppler-25.patch
-Patch3:		https://github.com/OSGeo/gdal/commit/979604d97720287416742ef264977f0e53a84aa8.patch
 Patch4:		https://github.com/OSGeo/gdal/commit/831295894d225b7d6098a5b8ccb51d33da52ef0c.patch
 %if %{with java}
 BuildRequires:	ant
@@ -67,7 +66,6 @@ BuildRequires:	make
 # Missing, but needed?
 #BuildRequires:	libdap-devel
 #BuildRequires:	librx-devel
-BuildRequires:	libtool-devel
 # Cmake searches for this
 BuildRequires:	%{_lib}zstd-static-devel
 BuildRequires:	mysql-devel
